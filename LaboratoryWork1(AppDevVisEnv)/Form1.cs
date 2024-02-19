@@ -14,38 +14,36 @@ namespace LaboratoryWork1_AppDevVisEnv_
     public partial class Form1 : Form
     {
         public enum Mods { LEFT_RECTANGLE_METHOD, MIDDLE_RECTANGLE_METHOD, RIGHT_RECTANGLE_METHOD, TRAPEZOID_METHOD }
-        private static Mods currentMod = Mods.TRAPEZOID_METHOD;
+        private Mods currentMod = Mods.TRAPEZOID_METHOD;
         public Form1()
         {
             InitializeComponent();
             this.chart1.Series[0].Points.Clear();
 
-            double x1 = Convert.ToDouble(textBox1.Text);
-            double x2 = Convert.ToDouble(textBox2.Text);
-            double h = Convert.ToDouble(textBox3.Text);
+            double x1 = Convert.ToDouble(textBoxLowBorder.Text);
+            double x2 = Convert.ToDouble(textBoxHighBorder.Text);
+            double h = Convert.ToDouble(textBoxStep.Text);
             double y;
 
             for (double x = x1; x <= x2; x += h)
             {
-                
                 y = mathFunction(x);
                 this.chart1.Series[1].Points.AddXY(x, y);
-                
             }
 
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void buttonExit_Click(object sender, EventArgs e)
         {
             Application.Exit();
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void result_Click(object sender, EventArgs e)
         {
             this.chart1.Series[0].Points.Clear();
-            double x1 = Convert.ToDouble(textBox1.Text);
-            double x2 = Convert.ToDouble(textBox2.Text);
-            double h = Convert.ToDouble(textBox3.Text);
+            double x1 = Convert.ToDouble(textBoxLowBorder.Text);
+            double x2 = Convert.ToDouble(textBoxHighBorder.Text);
+            double h = Convert.ToDouble(textBoxStep.Text);
             double y;
             double area = 0;
 
@@ -65,7 +63,7 @@ namespace LaboratoryWork1_AppDevVisEnv_
                                 chart1.Series[0].Points.AddXY(x + h, y);
                             }
 
-                            area += y * h;          //левых прямоугольников left rectangle
+                            area += y * h;          
                             break;
                         }
                     case Mods.MIDDLE_RECTANGLE_METHOD:
@@ -79,7 +77,7 @@ namespace LaboratoryWork1_AppDevVisEnv_
                                 chart1.Series[0].Points.AddXY(x + h, y);
                             }
 
-                            area += y * h;   //средних прямоугольников middle rectangle
+                            area += y * h;   
                             break;
                         }
                     case Mods.RIGHT_RECTANGLE_METHOD:
@@ -92,7 +90,7 @@ namespace LaboratoryWork1_AppDevVisEnv_
                                 chart1.Series[0].Points.AddXY(x + h, y);
                             }
 
-                            area += y * h;   //правых прямоугольников right rectangle
+                            area += y * h;   
                             break;
                         }
                     case Mods.TRAPEZOID_METHOD:
@@ -101,29 +99,17 @@ namespace LaboratoryWork1_AppDevVisEnv_
 
                             chart1.Series[0].Points.AddXY(x, y);
 
-                            area += h * (mathFunction(x) + mathFunction(x + h)) / 2;   //трапеций trapezoid
+                            area += h * (mathFunction(x) + mathFunction(x + h)) / 2;   
                             break;
                         }
 
 
 
                 }
-                
-                
+ 
             }
-            
-
-
-
-
-
-
+            label5.Text = Convert.ToString(area);
         }
-
-
-
-
-
 
         public double mathFunction(double x)
         {
@@ -149,5 +135,20 @@ namespace LaboratoryWork1_AppDevVisEnv_
         {
             currentMod = Mods.MIDDLE_RECTANGLE_METHOD;
         }
+
+
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkBox1.Checked)
+            {
+                chart1.Series[0].Enabled = false; // Скрыть график
+            }
+            else
+            {
+                chart1.Series[0].Enabled = true; // Показать график
+            }
+        }
+
+        
     }
 }
