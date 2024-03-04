@@ -7,133 +7,88 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows.Forms.DataVisualization.Charting;
 using static System.Math;
+using static LaboratoryWork1_AppDevVisEnv_.Integral;
 
 namespace LaboratoryWork1_AppDevVisEnv_
 {
     public partial class Form1 : Form
-    {
-        public enum Mods { LEFT_RECTANGLE_METHOD, MIDDLE_RECTANGLE_METHOD, RIGHT_RECTANGLE_METHOD, TRAPEZOID_METHOD }
-        private Mods currentMod = Mods.TRAPEZOID_METHOD;
+    { 
+        private double x1 { set; get; }
+        private double x2 { set; get; }
+        private double h { set; get; }
+        private double y { set; get; }
+        private double area { set; get; } = 0;
+        
         public Form1()
         {
             InitializeComponent();
-            this.chart1.Series[0].Points.Clear();
+            chart1.Series[0].Points.Clear();
 
-            double x1 = Convert.ToDouble(textBoxLowBorder.Text);
-            double x2 = Convert.ToDouble(textBoxHighBorder.Text);
-            double h = Convert.ToDouble(textBoxStep.Text);
-            double y;
-
+            x1 = Convert.ToDouble(textBoxLowBorder.Text);
+            x2 = Convert.ToDouble(textBoxHighBorder.Text);
+            h = Convert.ToDouble(textBoxStep.Text);
+            
             for (double x = x1; x <= x2; x += h)
             {
                 y = mathFunction(x);
-                this.chart1.Series[1].Points.AddXY(x, y);
+                chart1.Series[1].Points.AddXY(x, y);
             }
-
         }
+
 
         private void buttonExit_Click(object sender, EventArgs e)
         {
             Application.Exit();
         }
 
-        private void result_Click(object sender, EventArgs e)
-        {
-            this.chart1.Series[0].Points.Clear();
-            double x1 = Convert.ToDouble(textBoxLowBorder.Text);
-            double x2 = Convert.ToDouble(textBoxHighBorder.Text);
-            double h = Convert.ToDouble(textBoxStep.Text);
-            double y;
-            double area = 0;
-
-
-            for (double x = x1; x <= x2; x += h)
-            {
-                switch (currentMod)
-                {
-                    case Mods.LEFT_RECTANGLE_METHOD: 
-                        {
-
-                            y = mathFunction(x);
-
-                            chart1.Series[0].Points.AddXY(x, y);
-                            if (x + h <= x2)
-                            {
-                                chart1.Series[0].Points.AddXY(x + h, y);
-                            }
-
-                            area += y * h;          
-                            break;
-                        }
-                    case Mods.MIDDLE_RECTANGLE_METHOD:
-                        {
-                            y = mathFunction(x + h / 2);
-
-                            chart1.Series[0].Points.AddXY(x, y);
-                            if (x + h <= x2)
-
-                            {
-                                chart1.Series[0].Points.AddXY(x + h, y);
-                            }
-
-                            area += y * h;   
-                            break;
-                        }
-                    case Mods.RIGHT_RECTANGLE_METHOD:
-                        {
-                            y = mathFunction(x + h);
-
-                            chart1.Series[0].Points.AddXY(x, y);
-                            if (x + h <= x2)
-                            {
-                                chart1.Series[0].Points.AddXY(x + h, y);
-                            }
-
-                            area += y * h;   
-                            break;
-                        }
-                    case Mods.TRAPEZOID_METHOD:
-                        {
-                            y = mathFunction(x);
-
-                            chart1.Series[0].Points.AddXY(x, y);
-
-                            area += h * (mathFunction(x) + mathFunction(x + h)) / 2;   
-                            break;
-                        }
-
-
-
-                }
- 
-            }
-            label5.Text = Convert.ToString(area);
-        }
-
-        public double mathFunction(double x)
-        {
-            return Sin(x) / Sqrt(x);
-        }
-
         private void radioButtonMethodTrapezoid_CheckedChanged(object sender, EventArgs e)
         {
-            currentMod = Mods.TRAPEZOID_METHOD;
+            chart1.Series[1].Points.Clear();
+            chart1.Series[0].Points.Clear();
+            x1 = Convert.ToDouble(textBoxLowBorder.Text);
+            x2 = Convert.ToDouble(textBoxHighBorder.Text);
+            h = Convert.ToDouble(textBoxStep.Text);
+
+            label5.Text = Convert.ToString(TrapezoidMethod(ref chart1, x1, x2, h, area));
+            
         }
 
         private void radioButtonMethodLeftRectangles_CheckedChanged(object sender, EventArgs e)
         {
-            currentMod = Mods.LEFT_RECTANGLE_METHOD;
+            chart1.Series[1].Points.Clear();
+            chart1.Series[0].Points.Clear();
+
+            x1 = Convert.ToDouble(textBoxLowBorder.Text);
+            x2 = Convert.ToDouble(textBoxHighBorder.Text);
+            h = Convert.ToDouble(textBoxStep.Text);
+
+            label5.Text= Convert.ToString(leftRectangleMethod(ref chart1, x1, x2, h, area));
         }
 
         private void radioButtonRightRectangles_CheckedChanged(object sender, EventArgs e)
         {
-            currentMod = Mods.RIGHT_RECTANGLE_METHOD;
-        }
+            chart1.Series[1].Points.Clear();
+            chart1.Series[0].Points.Clear();
 
+
+            x1 = Convert.ToDouble(textBoxLowBorder.Text);
+            x2 = Convert.ToDouble(textBoxHighBorder.Text);
+            h = Convert.ToDouble(textBoxStep.Text);
+
+            label5.Text = Convert.ToString(rightRectangleMethod(ref chart1,x1,x2,h,area));
+        }
         private void radioButtonMediumRectangle_CheckedChanged(object sender, EventArgs e)
         {
-            currentMod = Mods.MIDDLE_RECTANGLE_METHOD;
+            chart1.Series[1].Points.Clear();
+            chart1.Series[0].Points.Clear();
+
+            x1 = Convert.ToDouble(textBoxLowBorder.Text);
+            x2 = Convert.ToDouble(textBoxHighBorder.Text);
+            h = Convert.ToDouble(textBoxStep.Text);
+
+            label5.Text = Convert.ToString(middleRectangleMethod(ref chart1, x1, x2,h, area));
         }
 
 
@@ -141,11 +96,11 @@ namespace LaboratoryWork1_AppDevVisEnv_
         {
             if (checkBox1.Checked)
             {
-                chart1.Series[0].Enabled = false; // Скрыть график
+                chart1.Series[0].Enabled = false; 
             }
             else
             {
-                chart1.Series[0].Enabled = true; // Показать график
+                chart1.Series[0].Enabled = true; 
             }
         }
 
