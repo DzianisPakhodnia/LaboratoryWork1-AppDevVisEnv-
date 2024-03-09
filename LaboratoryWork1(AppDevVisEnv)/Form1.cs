@@ -9,32 +9,27 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 using static System.Math;
-using static LaboratoryWork1_AppDevVisEnv_.Integral;
+using static LaboratoryWork1_AppDevVisEnv_.DrawIntegral;
 
 namespace LaboratoryWork1_AppDevVisEnv_
 {
     public partial class Form1 : Form
-    { 
+    {
         private double x1 { set; get; }
         private double x2 { set; get; }
         private double h { set; get; }
-        private double y { set; get; }
-        private double area { set; get; } = 0;
-        
+        private Integral integral; 
         public Form1()
         {
             InitializeComponent();
             chart1.Series[0].Points.Clear();
-
             x1 = Convert.ToDouble(textBoxLowBorder.Text);
             x2 = Convert.ToDouble(textBoxHighBorder.Text);
             h = Convert.ToDouble(textBoxStep.Text);
-            
-            for (double x = x1; x <= x2; x += h)
-            {
-                y = mathFunction(x);
-                chart1.Series[1].Points.AddXY(x, y);
-            }
+            labelLowBorderIntegral.Text = Convert.ToString(x1);
+            labelHighBorderIntegral.Text = Convert.ToString(x2);
+            integral = new Integral(x1, x2, h);
+
         }
 
 
@@ -47,11 +42,13 @@ namespace LaboratoryWork1_AppDevVisEnv_
         {
             chart1.Series[1].Points.Clear();
             chart1.Series[0].Points.Clear();
-            x1 = Convert.ToDouble(textBoxLowBorder.Text);
-            x2 = Convert.ToDouble(textBoxHighBorder.Text);
-            h = Convert.ToDouble(textBoxStep.Text);
+            double x1 = Convert.ToDouble(textBoxLowBorder.Text);
+            double x2 = Convert.ToDouble(textBoxHighBorder.Text);
+            double h = Convert.ToDouble(textBoxStep.Text);
+            labelLowBorderIntegral.Text = Convert.ToString(x1);
+            labelHighBorderIntegral.Text = Convert.ToString(x2);
 
-            label5.Text = Convert.ToString(TrapezoidMethod(ref chart1, x1, x2, h, area));
+            labelResult.Text = Convert.ToString(integral.TrapezoidMethod());
             
         }
 
@@ -60,11 +57,13 @@ namespace LaboratoryWork1_AppDevVisEnv_
             chart1.Series[1].Points.Clear();
             chart1.Series[0].Points.Clear();
 
-            x1 = Convert.ToDouble(textBoxLowBorder.Text);
-            x2 = Convert.ToDouble(textBoxHighBorder.Text);
-            h = Convert.ToDouble(textBoxStep.Text);
+            double x1 = Convert.ToDouble(textBoxLowBorder.Text);
+            double x2 = Convert.ToDouble(textBoxHighBorder.Text);
+            double h = Convert.ToDouble(textBoxStep.Text);
+            labelLowBorderIntegral.Text = Convert.ToString(x1);
+            labelHighBorderIntegral.Text = Convert.ToString(x2);
 
-            label5.Text= Convert.ToString(leftRectangleMethod(ref chart1, x1, x2, h, area));
+            labelResult.Text= Convert.ToString(integral.leftRectangleMethod());
         }
 
         private void radioButtonRightRectangles_CheckedChanged(object sender, EventArgs e)
@@ -73,22 +72,26 @@ namespace LaboratoryWork1_AppDevVisEnv_
             chart1.Series[0].Points.Clear();
 
 
-            x1 = Convert.ToDouble(textBoxLowBorder.Text);
-            x2 = Convert.ToDouble(textBoxHighBorder.Text);
-            h = Convert.ToDouble(textBoxStep.Text);
+            double x1 = Convert.ToDouble(textBoxLowBorder.Text);
+            double x2 = Convert.ToDouble(textBoxHighBorder.Text);
+            double h = Convert.ToDouble(textBoxStep.Text);
+            labelLowBorderIntegral.Text = Convert.ToString(x1);
+            labelHighBorderIntegral.Text = Convert.ToString(x2);
 
-            label5.Text = Convert.ToString(rightRectangleMethod(ref chart1,x1,x2,h,area));
+            labelResult.Text = Convert.ToString(integral.rightRectangleMethod());
         }
         private void radioButtonMediumRectangle_CheckedChanged(object sender, EventArgs e)
         {
             chart1.Series[1].Points.Clear();
             chart1.Series[0].Points.Clear();
 
-            x1 = Convert.ToDouble(textBoxLowBorder.Text);
-            x2 = Convert.ToDouble(textBoxHighBorder.Text);
-            h = Convert.ToDouble(textBoxStep.Text);
+            double x1 = Convert.ToDouble(textBoxLowBorder.Text);
+            double x2 = Convert.ToDouble(textBoxHighBorder.Text);
+            double h = Convert.ToDouble(textBoxStep.Text);
+            labelLowBorderIntegral.Text = Convert.ToString(x1);
+            labelHighBorderIntegral.Text = Convert.ToString(x2);
 
-            label5.Text = Convert.ToString(middleRectangleMethod(ref chart1, x1, x2,h, area));
+            labelResult.Text = Convert.ToString(integral.middleRectangleMethod());
         }
 
 
