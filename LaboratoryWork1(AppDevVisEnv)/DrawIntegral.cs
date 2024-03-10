@@ -23,14 +23,7 @@ namespace LaboratoryWork1_AppDevVisEnv_
             this.chart1 = chart1;
         }
 
-        public DrawIntegral()
-        {
-            x1 = 1.0;
-            x2 = 2.0;
-            h = 0.05;
-
-            
-        }
+        
 
         public Chart drawFunction() 
         {
@@ -41,7 +34,7 @@ namespace LaboratoryWork1_AppDevVisEnv_
             }
             return chart1;
         }
-        public void leftRectangleMethod(ref Chart chart1, double x1, double x2, double h)
+        public Chart leftRectangleMethod()
         {
             for (double x = x1; x <= x2; x += h)
             {
@@ -53,10 +46,11 @@ namespace LaboratoryWork1_AppDevVisEnv_
                     chart1.Series[0].Points.AddXY(x + h, y);
                 }
             }
+            return chart1;
         }
 
 
-        public void rightRectangleMethod(ref Chart chart1, double x1, double x2, double h)
+        public Chart rightRectangleMethod()
         {
             for (double x = x1; x <= x2; x += h)
             {
@@ -72,10 +66,11 @@ namespace LaboratoryWork1_AppDevVisEnv_
                 
 
             }
-            
+            return chart1;
+
         }
 
-        public void middleRectangleMethod(ref Chart chart1, double x1, double x2, double h, double area)
+        public Chart middleRectangleMethod()
         {
             for (double x = x1; x <= x2; x += h)
             {
@@ -90,9 +85,10 @@ namespace LaboratoryWork1_AppDevVisEnv_
                     chart1.Series[0].Points.AddXY(x + h, y);
                 }
             }
+            return chart1;
         }
 
-        public void TrapezoidMethod(ref Chart chart1, double x1, double x2, double h, double area)
+        public Chart TrapezoidMethod()
         {
             for (double x = x1; x <= x2; x += h)
             {
@@ -100,7 +96,8 @@ namespace LaboratoryWork1_AppDevVisEnv_
                 chart1.Series[1].Points.AddXY(x, y);
                 chart1.Series[0].Points.AddXY(x, y);   
             }
-            
+            return chart1;
+
         }
 
         

@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Windows.Forms;
-using System.Windows.Forms.DataVisualization.Charting;
-
-
 
 namespace LaboratoryWork1_AppDevVisEnv_
 {
@@ -22,8 +19,9 @@ namespace LaboratoryWork1_AppDevVisEnv_
             labelLowBorderIntegral.Text = Convert.ToString(x1);
             labelHighBorderIntegral.Text = Convert.ToString(x2);
             integral = new Integral(x1, x2, h);
-            
-            chart1= new DrawIntegral();
+            drawIntegral = new DrawIntegral(x1, x2, h, chart1);
+            drawIntegral.drawFunction();
+
         }
 
 
@@ -39,6 +37,8 @@ namespace LaboratoryWork1_AppDevVisEnv_
             double x1 = Convert.ToDouble(textBoxLowBorder.Text);
             double x2 = Convert.ToDouble(textBoxHighBorder.Text);
             double h = Convert.ToDouble(textBoxStep.Text);
+
+            drawIntegral.TrapezoidMethod();
             labelLowBorderIntegral.Text = Convert.ToString(x1);
             labelHighBorderIntegral.Text = Convert.ToString(x2);
 
@@ -54,6 +54,8 @@ namespace LaboratoryWork1_AppDevVisEnv_
             double x1 = Convert.ToDouble(textBoxLowBorder.Text);
             double x2 = Convert.ToDouble(textBoxHighBorder.Text);
             double h = Convert.ToDouble(textBoxStep.Text);
+
+            drawIntegral.leftRectangleMethod();
             labelLowBorderIntegral.Text = Convert.ToString(x1);
             labelHighBorderIntegral.Text = Convert.ToString(x2);
 
@@ -69,6 +71,9 @@ namespace LaboratoryWork1_AppDevVisEnv_
             double x1 = Convert.ToDouble(textBoxLowBorder.Text);
             double x2 = Convert.ToDouble(textBoxHighBorder.Text);
             double h = Convert.ToDouble(textBoxStep.Text);
+
+            drawIntegral.rightRectangleMethod();
+
             labelLowBorderIntegral.Text = Convert.ToString(x1);
             labelHighBorderIntegral.Text = Convert.ToString(x2);
 
@@ -82,6 +87,9 @@ namespace LaboratoryWork1_AppDevVisEnv_
             double x1 = Convert.ToDouble(textBoxLowBorder.Text);
             double x2 = Convert.ToDouble(textBoxHighBorder.Text);
             double h = Convert.ToDouble(textBoxStep.Text);
+
+            drawIntegral.middleRectangleMethod();
+
             labelLowBorderIntegral.Text = Convert.ToString(x1);
             labelHighBorderIntegral.Text = Convert.ToString(x2);
 
