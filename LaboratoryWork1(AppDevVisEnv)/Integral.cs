@@ -1,6 +1,4 @@
-﻿
-using static System.Math;
-
+﻿using static System.Math;
 namespace LaboratoryWork1_AppDevVisEnv_
 {
     public class Integral
@@ -11,7 +9,6 @@ namespace LaboratoryWork1_AppDevVisEnv_
         
         private double area { set; get; }
 
-        
         public Integral(double x1, double x2, double h)
         {
             this.x1 = x1;
@@ -24,7 +21,9 @@ namespace LaboratoryWork1_AppDevVisEnv_
             x1 = 1.0;
             x2 = 2.0;
             h = 0.05;
+            
         }
+
 
 
         public static double mathFunction(double x)

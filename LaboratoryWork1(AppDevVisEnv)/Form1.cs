@@ -1,35 +1,29 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
-using static System.Math;
-using static LaboratoryWork1_AppDevVisEnv_.DrawIntegral;
+
+
 
 namespace LaboratoryWork1_AppDevVisEnv_
 {
     public partial class Form1 : Form
     {
-        private double x1 { set; get; }
-        private double x2 { set; get; }
-        private double h { set; get; }
+        
         private Integral integral; 
+        private DrawIntegral drawIntegral;
+        
         public Form1()
         {
             InitializeComponent();
             chart1.Series[0].Points.Clear();
-            x1 = Convert.ToDouble(textBoxLowBorder.Text);
-            x2 = Convert.ToDouble(textBoxHighBorder.Text);
-            h = Convert.ToDouble(textBoxStep.Text);
+            double x1 = Convert.ToDouble(textBoxLowBorder.Text);
+            double x2 = Convert.ToDouble(textBoxHighBorder.Text);
+            double h = Convert.ToDouble(textBoxStep.Text);
             labelLowBorderIntegral.Text = Convert.ToString(x1);
             labelHighBorderIntegral.Text = Convert.ToString(x2);
             integral = new Integral(x1, x2, h);
-
+            
+            chart1= new DrawIntegral();
         }
 
 
